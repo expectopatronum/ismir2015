@@ -60,14 +60,17 @@ def apply_random_stretch_shift(batches, max_stretch, max_shift,
     and the first `keep_bins` bins. For performance, the spline `order` can be
     reduced, and inputs can be `prefiltered` with scipy.ndimage.spline_filter.
     """
-    # new_scipy = (map(int, scipy.__version__.split('.', 2)[:2]) >= [0, 18])
-    # if new_scipy:
-    #     # Changed offset handling: https://github.com/scipy/scipy/issues/1547
-    #     import warnings
-    #     warnings.filterwarnings(
-    #             "ignore", "The behaviour of affine_transform with a "
-    #             "one-dimensional array supplied for the matrix parameter "
-    #             "has changed in scipy 0.18.0.", module="scipy.ndimage")
+
+    from distutils.version import StrictVersion
+
+    new_scipy = StrictVersion(scipy.__version__) >= StrictVersion("0.18")
+    if new_scipy:
+        # Changed offset handling: https://github.com/scipy/scipy/issues/1547
+        import warnings
+        warnings.filterwarnings(
+                "ignore", "The behaviour of affine_transform with a "
+                "one-dimensional array supplied for the matrix parameter "
+                "has changed in scipy 0.18.0.", module="scipy.ndimage")
 
     for spects, labels in batches:
         outputs = np.empty((len(spects), keep_frames, keep_bins),
