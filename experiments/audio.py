@@ -48,9 +48,9 @@ def spectrogram(samples, sample_rate, frame_len, fps, batch=50):
     batch = min(batch, num_frames)
     if batch <= 1 or not samples.flags.c_contiguous:
         rfft = rfft_builder(samples[:frame_len], n=frame_len)
-        spect = np.vstack(np.abs(rfft(samples[pos:pos + frame_len] * win))
+        spect = np.vstack([np.abs(rfft(samples[pos:pos + frame_len] * win))
                           for pos in range(0, len(samples) - frame_len + 1,
-                                           int(hopsize)))
+                                           int(hopsize))])
     else:
         rfft = rfft_builder(np.empty((batch, frame_len), samples.dtype),
                             n=frame_len, threads=1)
