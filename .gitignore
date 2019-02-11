@@ -6,3 +6,4 @@ datasets/jamendo/filelists/test
 datasets/jamendo/labels/*.lab
 experiments/*.npz
 *.pyc
+.idea/
