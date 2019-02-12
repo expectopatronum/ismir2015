@@ -66,7 +66,9 @@ def apply_random_stretch_shift(batches, max_stretch, max_shift,
     and the first `keep_bins` bins. For performance, the spline `order` can be
     reduced, and inputs can be `prefiltered` with scipy.ndimage.spline_filter.
     """
-    new_scipy = (map(int, scipy.__version__.split('.', 2)[:2]) >= [0, 18])
+    from distutils.version import StrictVersion
+
+    new_scipy = StrictVersion(scipy.__version__) >= StrictVersion("0.18")
     if new_scipy:
         # Changed offset handling: https://github.com/scipy/scipy/issues/1547
         import warnings
