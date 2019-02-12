@@ -7,3 +7,4 @@ datasets/jamendo/labels/*.lab
 experiments/*.npz
 experiments/*.npz.vars
 *.pyc
+.idea/
